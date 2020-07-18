@@ -1,0 +1,32 @@
+package sets;
+
+/*
+ * Given an array, find if there exists a subarray with sum equals to zero
+ *  n < 10^5
+ *  subarray =  means elements should be in continuous manner.   Most imp confusion for me
+ */
+
+public class SubarrayWithZeroSum {
+	
+	public static void main(String[] args) {
+		
+		int a[] = {2, 1, 5, -4, 2};
+		boolean found = false;
+		
+		for(int i=0; i < a.length; i++) {
+			int sum = 0;
+			for(int j = i; j < a.length; j++) {
+				sum = sum + a[j];
+				if(sum == 0) {
+					found = true;
+					break;
+				}
+			}
+			if(found) break;
+		}
+		
+		System.out.println(" found " + found);
+		
+	}
+	
+}
