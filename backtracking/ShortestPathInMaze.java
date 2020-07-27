@@ -20,7 +20,7 @@ public class ShortestPathInMaze {
 				
 					};
 		
-		int result = shortestPath(a, 0, 0, 0, 9);
+		int result = shortestPath(a, 0, 0, 8, 0);
 		if( result >= 100000) {
 			System.out.println("No path poosible");
 		} else {
@@ -44,7 +44,24 @@ public class ShortestPathInMaze {
 		
 		if(!isValid(a, i, j, isVisted)) return 100000;
 		
-		if(i == x && j == y) return 0;
+		if(i == x && j == y) {
+			
+			// To print all possible paths
+			
+			isVisted[x][y] = true;
+			for(int h = 0; h < isVisted.length; h++) {
+				for(int k = 0; k < isVisted[0].length; k++) {
+					System.out.print("\t" + isVisted[h][k] + " ");
+				}
+				System.out.println();
+			}
+			isVisted[x][y] = false;
+			System.out.println("\n\n\n");
+			
+			// printing code over
+					
+			return 0;
+		}
 		
 		isVisted[i][j] = true;
 		

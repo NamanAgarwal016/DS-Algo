@@ -12,8 +12,10 @@ public class Introduction {
 		numbers.put("one", 1);
 		numbers.put("seven", 7);
 		numbers.put("ten", 10);
-
-		numbers.putIfAbsent("ten", 7);
+		
+		System.out.println(numbers.get("one"));
+		System.out.println(numbers);
+		numbers.put("ten", 7);
 		System.out.println(numbers);
 		System.out.println(numbers.keySet());
 		System.out.println(numbers.values());
