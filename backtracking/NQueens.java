@@ -3,8 +3,9 @@ package backtracking;
 public class NQueens {
 	public static void main(String[] args) {
 
-		int n = 4;
+		int n = 5;
 
+		// random empty board
 		int board[][] = new int[10][10];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board.length; j++) {
@@ -21,13 +22,13 @@ public class NQueens {
 
 		// Base Case
 		if (i == n) {
-			
+
 			// You have successfully placed queens in n rows (o ... n-1)
 			// print the board
 
-			for(int i1 = 0; i1 < n ; i1 ++) {
-				for(int j = 0; j < n ; j ++) {
-					if(board[i1][j] == 1) {
+			for (int i1 = 0; i1 < n; i1++) {
+				for (int j = 0; j < n; j++) {
+					if (board[i1][j] == 1) {
 						System.out.print("Q ");
 					} else {
 						System.out.print("_ ");
@@ -35,10 +36,10 @@ public class NQueens {
 				}
 				System.out.println();
 			}
-			
+
 			System.out.println("\n\n");
-			
-			return false;   // magic line due to which all possible arrangements are printing
+
+			return false; // magic line due to which all possible arrangements are printing
 		}
 
 		// Recursive Case
@@ -48,23 +49,23 @@ public class NQueens {
 
 			// check if i, j position is safe to place the queen or not.
 			// just need to check in upper side part = uper col, right+left top diag
-			
-			if(isSafe(board, i, j, n)) {
-				// place the queen -  assuming i, j is right position	
+
+			if (isSafe(board, i, j, n)) {
+				// place the queen - assuming i, j is right position
 				board[i][j] = 1;
-				
-				boolean nextQueenRakhPayenge = solveNQueen(board, i+1, n);
-				if(nextQueenRakhPayenge) {
+
+				boolean nextQueenRakhPayenge = solveNQueen(board, i + 1, n);
+				if (nextQueenRakhPayenge) {
 					return true;
 				}
-				
-				// Means i, j is not the right position - assumption wrong
-				board[i][j] = 0;   		// Backtrack
+
+				// else condition, Means i, j is not the right position - assumption wrong
+				board[i][j] = 0; // Backtrack
 			}
 
 		}
-		
-		// Can't place a queen in any position int this particular row
+
+		// Can't place a queen in any position in this particular row
 		return false;
 
 	}
@@ -89,7 +90,8 @@ public class NQueens {
 		}
 
 		// right Diag check
-		x = i; y = j;
+		x = i;
+		y = j;
 		while (x >= 0 && y < n) {
 			if (board[x][y] == 1) {
 				return false;
@@ -97,8 +99,8 @@ public class NQueens {
 			x--;
 			y++;
 		}
-		
-		// position is now safe  from col and diagonals
+
+		// position is now safe from col and diagonals
 		return true;
 
 	}
