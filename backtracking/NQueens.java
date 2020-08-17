@@ -3,7 +3,7 @@ package backtracking;
 public class NQueens {
 	public static void main(String[] args) {
 
-		int n = 5;
+		int n = 4;
 
 		// random empty board
 		int board[][] = new int[10][10];
