@@ -2,8 +2,12 @@ package bst;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class MyBinaryTree {
+	
+	static Scanner sc = new Scanner(System.in);
+	
 	static Node root;
 
 	// Driver function
@@ -27,8 +31,30 @@ public class MyBinaryTree {
 		deleteNode(root, 10);
 		System.out.println("\n\nAfter deletion");
 		inorder(root);
+		
+		System.out.println();
+		inorder(createTree());
 
 	}
+	
+	// create data by data input from std input
+	static Node createTree() {
+		Node root = null;
+		
+		System.out.println("Enter data : ");
+		int key = sc.nextInt();
+		if(key == -1) return null;
+		root = new Node(key);
+		
+		System.out.println("Enter left data of " + key);
+		root.left = createTree();
+		
+		System.out.println("Enter right data of " + key);
+		root.right = createTree();
+		
+		return root;
+	}
+	
 
 	// printing in inorder traversal using recursion
 	static void inorder(Node root) {
