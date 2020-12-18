@@ -9,7 +9,7 @@ public class AllSubsequencesOfString {
 		// printSubs("abc", "");
 
 		// returning all subsequences
-		for (String str : returnSubs("bc")) {
+		for (String str : returnSubs("1234`")) {
 			System.out.println(str);
 		}
 

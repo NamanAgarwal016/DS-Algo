@@ -32,6 +32,10 @@ public class Introduction {
 		}
 		
 		System.out.println(numbers);
-
+		
+		for(Map.Entry<String, Integer> entry : numbers.entrySet()) {
+			System.out.println(entry.getKey() + " = " + entry.getValue());
+		}
+		
 	}
 }
