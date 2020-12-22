@@ -1,5 +1,7 @@
 package graphs;
 
+// Anuj Bhaiya Approaches of : Represenataion, shortest path using bfs, dfs
+
 import java.util.*;
 
 public class Graphs {
@@ -79,7 +81,7 @@ public class Graphs {
 		return dfsUtil(source, destination, vis);
 	}
 	
-
+// using stack and backtracking
 	public boolean dfsStack(int source, int destination) {
 		boolean vis[] = new boolean[adj.length];
 		vis[source] = true;
