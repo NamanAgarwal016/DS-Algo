@@ -1,5 +1,6 @@
 package graphs;
 
+
 // Dijkstra's Algorithm on : 
 // Undirected/ Directed Weighted Graph
 
@@ -29,7 +30,7 @@ public class DijkstraAlgorithm {
 
 		graph1.printGraph();
 
-		graph1.dijkstra(0);
+		graph1.dijkstra(3);
 
 		// Directed Graph
 // https://www.youtube.com/watch?v=XB4MIexjvY0&ab_channel=AbdulBari
@@ -101,6 +102,9 @@ class Graph7 {
 		}
 		nodeDist[source] = 0;
 
+		int parent[] = new int[v];
+		parent[source] = -1;
+
 		for (int node = 0; node < adj.length - 1; node++) { // last node ke liye uske neighbrs already calculate kar
 															// diye
 
@@ -115,6 +119,7 @@ class Graph7 {
 				if (nodeDist[nextNode] > nodeDist[minNodeIndex] + dist && nodeDist[minNodeIndex] != Integer.MAX_VALUE) {
 // 2nd condition bcoz: MAX_VALUE + any +ve = becomes negative and then this will be true : MAX_VALUE > MAX_VALUE + weight
 					nodeDist[nextNode] = nodeDist[minNodeIndex] + dist;
+					parent[nextNode] = minNodeIndex;
 				}
 			}
 		}
@@ -122,6 +127,11 @@ class Graph7 {
 		System.out.println("\nDistance of nodes from source :");
 		for (int node = 0; node < nodeDist.length; node++) {
 			System.out.println(node + " : " + nodeDist[node]);
+		}
+
+		System.out.println("\nParent of nodes for shortest path :");
+		for (int node = 0; node < parent.length; node++) {
+			System.out.println(node + " : " + parent[node]);
 		}
 
 	}
@@ -152,3 +162,90 @@ class Graph7 {
 	}
 
 }
+
+// Binary Heap Map implementation :
+
+// https://github.com/mission-peace/interview/blob/master/src/com/interview/graph/DijkstraShortestPath.A
+
+//class DijkstraShortestPath {
+//
+//    public Map<Vertex<Integer>,Integer> shortestPath(Graph<Integer> graph, Vertex<Integer> sourceVertex){
+//
+//        //heap + map data structure
+//        BinaryMinHeap<Vertex<Integer>> minHeap = new BinaryMinHeap<>();
+//
+//        //stores shortest distance from root to every vertex
+//        Map<Vertex<Integer>,Integer> distance = new HashMap<>();
+//
+//        //stores parent of every vertex in shortest distance
+//        Map<Vertex<Integer>, Vertex<Integer>> parent = new HashMap<>();
+//
+//        //initialize all vertex with infinite distance from source vertex
+//        for(Vertex<Integer> vertex : graph.getAllVertex()){
+//            minHeap.add(Integer.MAX_VALUE, vertex);
+//        }
+//
+//        //set distance of source vertex to 0
+//        minHeap.decrease(sourceVertex, 0);
+//
+//        //put it in map
+//        distance.put(sourceVertex, 0);
+//
+//        //source vertex parent is null
+//        parent.put(sourceVertex, null);
+//
+//        //iterate till heap is not empty
+//        while(!minHeap.empty()){
+//            //get the min value from heap node which has vertex and distance of that vertex from source vertex.
+//            BinaryMinHeap<Vertex<Integer>>.Node heapNode = minHeap.extractMinNode();
+//            Vertex<Integer> current = heapNode.key;
+//
+//            //update shortest distance of current vertex from source vertex
+//            distance.put(current, heapNode.weight);
+//
+//            //iterate through all edges of current vertex
+//            for(Edge<Integer> edge : current.getEdges()){
+//
+//                //get the adjacent vertex
+//                Vertex<Integer> adjacent = getVertexForEdge(current, edge);
+//
+//                //if heap does not contain adjacent vertex means adjacent vertex already has shortest distance from source vertex
+//                if(!minHeap.containsData(adjacent)){
+//                    continue;
+//                }
+//
+//                //add distance of current vertex to edge weight to get distance of adjacent vertex from source vertex
+//                //when it goes through current vertex
+//                int newDistance = distance.get(current) + edge.getWeight();
+//
+//                //see if this above calculated distance is less than current distance stored for adjacent vertex from source vertex
+//                if(minHeap.getWeight(adjacent) > newDistance) {
+//                    minHeap.decrease(adjacent, newDistance);
+//                    parent.put(adjacent, current);
+//                }
+//            }
+//        }
+//        return distance;
+//    }
+//
+//    private Vertex<Integer> getVertexForEdge(Vertex<Integer> v, Edge<Integer> e){
+//        return e.getVertex1().equals(v) ? e.getVertex2() : e.getVertex1();
+//    }
+//    
+//    public static void main(String args[]){
+//        Graph<Integer> graph = new Graph<>(false);
+//
+//        graph.addEdge(1, 2, 5);
+//        graph.addEdge(2, 3, 2);
+//        graph.addEdge(1, 4, 9);
+//        graph.addEdge(1, 5, 3);
+//        graph.addEdge(5, 6, 2);
+//        graph.addEdge(6, 4, 2);
+//        graph.addEdge(3, 4, 3);
+//
+//        DijkstraShortestPath dsp = new DijkstraShortestPath();
+//        Vertex<Integer> sourceVertex = graph.getVertex(1);
+//        Map<Vertex<Integer>,Integer> distance = dsp.shortestPath(graph, sourceVertex);
+//        System.out.print(distance);
+//    }
+//}

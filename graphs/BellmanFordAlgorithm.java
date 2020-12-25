@@ -33,7 +33,7 @@ public class BellmanFordAlgorithm {
 
 		graph.printGraph();
 
-		graph.bellmanFord(2);
+		graph.bellmanFord(0);
 	}
 }
 
@@ -88,6 +88,9 @@ class Graph8 {
 			nodeDist[node] = Integer.MAX_VALUE;
 		}
 		nodeDist[source] = 0;
+		
+		int parent[] = new int[v];
+		parent[source] = -1;
 
 		for (int i = 0; i < runTimeOfAlgo; i++) { // 3 for-loops bcoz of adj list, instead use simply array of edges to
 													// get 2 for-loops
@@ -102,6 +105,7 @@ class Graph8 {
 					if (nodeDist[dest] > nodeDist[src] + weight && nodeDist[src] != Integer.MAX_VALUE) {
 // 2nd condition bcoz: MAX_VALUE + any +ve = becomes negative and then this will be true : MAX_VALUE > MAX_VALUE + weight
 						nodeDist[dest] = nodeDist[src] + weight;
+						parent[dest] = src; 
 					}
 				}
 			}
@@ -125,6 +129,11 @@ class Graph8 {
 		System.out.println("\nDistance of nodes from source :");
 		for (int node = 0; node < nodeDist.length; node++) {
 			System.out.println(node + " : " + nodeDist[node]);
+		}
+		
+		System.out.println("\nParent of nodes for shortest path :");
+		for (int node = 0; node < parent.length; node++) {
+			System.out.println(node + " : " + parent[node]);
 		}
 	}
 
