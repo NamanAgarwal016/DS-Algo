@@ -1,25 +1,34 @@
 package graphs;
 
-import java.util.Arrays;
-import java.util.Comparator;
+// https://www.youtube.com/watch?v=rbKcTM3RREw&feature=youtu.be&ab_channel=CodingNinjasIndia
+// https://www.youtube.com/watch?v=wU6udHRIkcc&ab_channel=AbdulBari
+
+import java.util.*;
+
+// Union and find algo used
+// Weighted union also shown in comments
+// Collapsing find algo remaining
 
 public class KruskalsAlgorithm {
 	public static void main(String[] args) {
 
 		Graph13 graph = new Graph13(6, 11);
-		graph.addEdge(0, 1, 1);
-		graph.addEdge(0, 2, 5);
-		graph.addEdge(2, 3, 10);
-		graph.addEdge(0, 3, 4);
-		graph.addEdge(1, 3, 3);
-		graph.addEdge(1, 2, 6);
-		graph.addEdge(3, 4, 7);
-		graph.addEdge(2, 4, 8);
-		graph.addEdge(4, 5, 2);
-		graph.addEdge(2, 5, 9);
-		graph.addEdge(3, 5, 6);
+		graph.addEdge(0, 1, 2);
+		graph.addEdge(1, 3, 1);
+		graph.addEdge(0, 2, 4);
+		graph.addEdge(2, 4, 9);
+		graph.addEdge(4, 5, 5);
+		graph.addEdge(3, 5, 7);
+		graph.addEdge(4, 3, 11);
+		graph.addEdge(2, 5, 10);
+		graph.addEdge(0, 3, 3);
+		graph.addEdge(2, 1, 8);
+		graph.addEdge(2, 3, 6);
 
 		graph.printEdges();
+
+		System.out.println("\nEdges included in MST using krushkal: ");
+		graph.krushalAlgo();
 
 	}
 }
@@ -53,10 +62,6 @@ class Graph13 {
 	}
 
 	public void printEdges() {
-// Arrays.sort(edges); // Using Comparable
-
-// Arrays.sort(edges, new SortByWeight()); //Using class SortByWeight which implements Comparator
-
 		for (Edge e : edges) {
 			System.out.println(e.source + "-" + e.dest + ": " + e.weight);
 		}
@@ -72,12 +77,59 @@ class Graph13 {
 		});
 
 		// Select v-1 edges for MST
-		Edge selectedEdges[] = new Edge[v-1];
+		Edge selectedEdges[] = new Edge[v - 1];
 		int count = 0;
-		
-		while(count < v-1) {
-			
+
+		int parent[] = new int[v];
+		for (int i = 0; i < v; i++)
+			parent[i] = -1;
+
+		for (int i = 0; i < e && count < v - 1; i++) {
+			Edge currentEdge = edges[i];
+			int node1 = currentEdge.source;
+			int node2 = currentEdge.dest;
+
+			// check if edge doesn't form a cycle; check if both nodes are in same set
+			int parent1 = findParent(node1, parent); // find Algo
+			int parent2 = findParent(node2, parent);
+
+			if (parent1 != parent2) {
+				parent[parent1] = parent2; // Union operation
+
+// Acc to Bari Sir( timestamp @17:10 ), Weighted Union
+//				if(parent[parent1] <= parent[parent2]) {
+//					int weight = parent[parent2];
+//					parent[parent2] = parent1;
+//					parent[parent1] = parent[parent1] + weight ;
+//				} else {
+//					int weight = parent[parent1];
+//					parent[parent1] = parent2;
+//					parent[parent2] = parent[parent2] + weight;
+//				}
+
+				selectedEdges[count] = currentEdge;
+				count++;
+			} else // cycle detected
+				continue;
 		}
+
+		int cost = 0;
+		for (Edge e : selectedEdges) {
+			cost += e.weight;
+			System.out.println(e.source + "-" + e.dest + ": " + e.weight);
+		}
+		System.out.println("MST cost is: " + cost);
+
+	}
+
+	private int findParent(int node, int[] parent) {
+		int parentNode = parent[node];
+
+		if (parentNode < 0) // or parentNode == -1
+			return node;
+
+		return findParent(parentNode, parent);
+
 	}
 
 }
