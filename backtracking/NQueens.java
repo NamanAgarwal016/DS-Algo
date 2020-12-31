@@ -3,10 +3,10 @@ package backtracking;
 public class NQueens {
 	public static void main(String[] args) {
 
-		int n = 4;
+		int n = 5;
 
 		// random empty board
-		int board[][] = new int[10][10];
+		int board[][] = new int[n][n];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board.length; j++) {
 				board[i][j] = 0;
@@ -46,6 +46,7 @@ public class NQueens {
 		// Try to place the queen in the current row and call on the remaining part
 		// which will be solved by recursion
 		for (int j = 0; j < n; j++) {
+			
 
 			// check if i, j position is safe to place the queen or not.
 			// just need to check in upper side part = uper col, right+left top diag

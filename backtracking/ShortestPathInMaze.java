@@ -1,5 +1,7 @@
 package backtracking;
 
+// https://www.youtube.com/watch?v=S3rnLLHl0PM&ab_channel=ApniKaksha
+
 public class ShortestPathInMaze {
 	public static void main(String[] args) {
 		
@@ -20,7 +22,14 @@ public class ShortestPathInMaze {
 				
 					};
 		
-		int result = shortestPath(a, 0, 0, 8, 0);
+		int b[][] = { 
+				{1, 0, 0, 0},
+				{1, 1, 0, 1},
+				{0, 1, 0, 0},
+				{1, 1, 1, 1}
+		};	
+		
+		int result = shortestPath(b, 0, 0, 3, 3);
 		if( result >= 100000) {
 			System.out.println("No path poosible");
 		} else {
