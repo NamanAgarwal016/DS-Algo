@@ -1,5 +1,7 @@
 package recursion;
 
+// https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
+
 public class MatrixFloodFill {
 	public static void main(String[] args) {
 
@@ -16,15 +18,12 @@ public class MatrixFloodFill {
 
 		print(a);
 		
-		floodFill(a, 4, 3, 9, 2);
+		floodFill(a, 0, 0, 9, 1);
 
 		print(a);
-
 	}
 
 	private static void print(int[][] a) {
-		int rows = a.length;
-		int cols = a[0].length;
 
 		for (int i = 0; i < a.length; i++) {
 			for (int x : a[i]) {
