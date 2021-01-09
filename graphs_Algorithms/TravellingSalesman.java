@@ -15,7 +15,7 @@ public class TravellingSalesman {
 		// matrix representation of graph
 		int graph[][] = { { 0, 10, 15, 20 }, { 10, 0, 35, 25 }, { 15, 35, 0, 30 }, { 20, 25, 30, 0 } };
 		int s = 0;
-		System.out.println(travllingSalesmanProblem(graph, s));
+		System.out.println("\nMinimum weighted path: " + travllingSalesmanProblem(graph, s));
 	}
 
 	// implementation of traveling Salesman Problem
@@ -29,6 +29,7 @@ public class TravellingSalesman {
 
 		// store minimum weight Hamiltonian Cycle.
 		int min_path = Integer.MAX_VALUE;
+
 		do {
 			// store current Path weight(cost)
 			int current_pathweight = 0;
@@ -40,8 +41,16 @@ public class TravellingSalesman {
 				current_pathweight += graph[k][vertex.get(i)];
 				k = vertex.get(i);
 			}
-			current_pathweight += graph[k][s];
+			current_pathweight += graph[k][s]; // returning from last node to starting node
 
+			
+			// print permuations of all paths with thier weights
+			System.out.print(s + " - ");
+			for (int e : vertex)
+				System.out.print(e + " - ");
+			System.out.println(s + " : " + current_pathweight);
+
+			
 			// update minimum
 			min_path = Math.min(min_path, current_pathweight);
 
@@ -77,6 +86,7 @@ public class TravellingSalesman {
 
 	// Function to find the next permutation of the given integer array
 	public static boolean findNextPermutation(ArrayList<Integer> data) {
+
 		// If the given dataset is empty or contains only one element next_permutation
 		// is not possible
 		if (data.size() <= 1)
@@ -85,6 +95,7 @@ public class TravellingSalesman {
 		int last = data.size() - 2;
 
 		// find the longest non-increasing suffix and find the pivot
+		// here pivot is last
 		while (last >= 0) {
 			if (data.get(last) < data.get(last + 1)) {
 				break;
