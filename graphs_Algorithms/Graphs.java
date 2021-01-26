@@ -1,6 +1,6 @@
 package graphs_Algorithms;
 
-// Anuj Bhaiya Approaches of : Represenataion, shortest path using bfs, dfs
+// Anuj Bhaiya Approaches of : Representation, shortest path using bfs, dfs
 
 import java.util.*;
 

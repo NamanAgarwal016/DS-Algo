@@ -37,5 +37,10 @@ public class StringFunctions {
         String str = "     space   more   space     ";
         System.out.println(str.trim()); // trim only the starting and ending spaces...here space   more   space
         
+        String s1 = "what";
+        char temp = s1.charAt(0);
+        s1.replace(s1.charAt(0), s1.charAt(2));
+        s1.replace(s1.charAt(2), temp);
+        System.out.println("modified: " + s1);
     }
 }

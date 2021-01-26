@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class InputMethods {
 	public static void main(String[] args) throws IOException{
@@ -34,5 +35,12 @@ public class InputMethods {
 		// int i = Integer.parseInt(br.readLine());
 		// String s = br.readLine();
 		
+		String s = "6, 2, 4, 9, 56";
+		int arr[] = new int[5];
+	    StringTokenizer st = new StringTokenizer(s, ", ");
+	    for(int i = 0; i < 5; i++){
+	        arr[i] = Integer.parseInt(st.nextToken());
+	    }
+	    for(int e: arr) System.out.println(e);
 	}
 }

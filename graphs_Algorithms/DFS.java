@@ -1,6 +1,5 @@
 package graphs_Algorithms;
 
-import java.io.*;
 import java.util.*;
 
 public class DFS {
@@ -32,7 +31,7 @@ class Graph4 {
 		V = v;
 		adj = new LinkedList[v];
 		for (int i = 0; i < v; ++i)
-			adj[i] = new LinkedList();
+			adj[i] = new LinkedList<Integer>();
 	}
 
 	// Function to add an edge into the graph
