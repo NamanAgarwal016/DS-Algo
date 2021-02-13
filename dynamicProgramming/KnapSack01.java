@@ -44,6 +44,7 @@ class Knapsack {
 
 		if (n == 0 || W == 0)
 			return dp[n][W] = 0;
+		
 		if (wt[n - 1] <= W) {
 			return dp[n][W] = Math.max(val[n - 1] + knapSack2(W - wt[n - 1], wt, val, n - 1, dp),
 					knapSack2(W, wt, val, n - 1, dp));
