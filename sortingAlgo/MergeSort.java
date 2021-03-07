@@ -1,5 +1,7 @@
 package sortingAlgo;
 
+// https://www.youtube.com/watch?v=4z9I6ZmeLOQ
+
 public class MergeSort {
 	public static void main(String[] args) {
 		int arr[] = {2, 6, 9, 1, 0, 3};
