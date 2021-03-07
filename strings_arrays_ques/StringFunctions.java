@@ -1,4 +1,4 @@
-package strings_arrays_ques;
+	package strings_arrays_ques;
 
                                       // All most Important Functions are discussed here
 public class StringFunctions {
