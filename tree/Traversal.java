@@ -75,7 +75,26 @@ public class Traversal {
 			}
 		}
 	}
-
+	
+	// Same mtd, but executing level wise 
+	static void levelorder3(Node root) {
+//		queue<TreeNode*> remNodes;
+//        remNodes.push(root);
+//        while(remNodes.empty()==false){
+//            int cls = remNodes.size(); //curr_level_size
+//            double sum=0;
+//            for(int i=0;i<cls;i++){
+//                TreeNode* temp = remNodes.front();
+//                remNodes.pop();
+//                sum+=(double)temp->val;
+//                if(temp->left) remNodes.push(temp->left);
+//                if(temp->right) remNodes.push(temp->right);
+//            }
+//            ans.push_back(sum/cls);
+//        }
+//        return ans;
+	}
+	
 	// DFS : Depth first traversal
 
 	static void inorder(Node root) {
