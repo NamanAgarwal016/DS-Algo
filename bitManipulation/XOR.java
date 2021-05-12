@@ -5,7 +5,11 @@ package bitManipulation;
 public class XOR {
 	public static void main(String[] args) {
 		
-		//Properties: a^a = 0,  0^a = a
+		/*Properties
+		 * a^a = 0
+		 * 0^a = a
+		 * if a^b = c then a^c = b
+		 */
 		
 		//XOR operations
 		//Q1. Find the only non-repeating element in an array where every other element repeats twice. - 
