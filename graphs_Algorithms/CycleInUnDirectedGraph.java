@@ -1,7 +1,8 @@
 package graphs_Algorithms;
-
-//A Java Program to detect cycle in an undirected graph 
+// gfg
 import java.util.*;
+
+// Logic: If an adjacent is visited and not parent of current vertex, then there is a cycle.
 
 public class CycleInUnDirectedGraph {
 	public static void main(String args[]) {

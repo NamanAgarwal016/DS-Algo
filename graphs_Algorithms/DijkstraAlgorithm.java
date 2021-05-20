@@ -137,28 +137,28 @@ class Graph7 {
 	}
 
 	private int findMinNodeIndex(int nodeDist[], boolean visited[]) {
-		int minNodeIndex = 0;
-		for (int i = 0; i < visited.length; i++) {
-			if (!visited[i]) {
-				minNodeIndex = i;
-				break;
-			}
-		}
-		for (int i = 0; i < nodeDist.length; i++) {
-			if (nodeDist[i] < nodeDist[minNodeIndex] && !visited[i])
-				minNodeIndex = i;
-		}
-
-//		// Instead of above 2 for loop :
-//		int minVertex = -1;
-//		for (int i = 0; i < nodeDist.length; i++) {
-//			if (!visited[i] && (minVertex == -1 || nodeDist[i] < nodeDist[minVertex])) {		// Here order in OR condition is IMP, otherwise it will be indexOutOfBound = -1
-//				minVertex = i;
+//		int minNodeIndex = 0;
+//		for (int i = 0; i < visited.length; i++) {
+//			if (!visited[i]) {
+//				minNodeIndex = i;
+//				break;
 //			}
 //		}
+//		for (int i = 0; i < nodeDist.length; i++) {
+//			if (nodeDist[i] < nodeDist[minNodeIndex] && !visited[i])
+//				minNodeIndex = i;
+//		}
 
-		visited[minNodeIndex] = true;
-		return minNodeIndex;
+		// Instead of above 2 for loop :
+		int minVertex = -1;
+		for (int i = 0; i < nodeDist.length; i++) {
+			if (!visited[i] && (minVertex == -1 || nodeDist[i] < nodeDist[minVertex])) {		// Here order in OR condition is IMP, otherwise it will be indexOutOfBound = -1
+				minVertex = i;
+			}
+		}
+
+		visited[minVertex] = true;
+		return minVertex;
 	}
 
 }

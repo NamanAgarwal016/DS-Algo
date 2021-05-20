@@ -1,9 +1,12 @@
 package graphs_Algorithms;
 
-//A Java Program to detect cycle in a graph 
+// https://youtu.be/joqmqvHC_Bo
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+//Logic: If a vertex is reached that is already in the recursion stack, then there is a cycle in the tree
 
 public class CycleInDirectedGraph {
 	// Driver code
@@ -40,8 +43,7 @@ class Graph1 {
 		adj.get(source).add(dest);
 	}
 
-	// Returns true if the graph contains a cycle, else false.
-
+	
 	// This function is a variation of DFS()
 	public boolean isCyclic() {
 
