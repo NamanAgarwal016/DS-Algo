@@ -1,6 +1,7 @@
 package graphs_Algorithms;
 
 import java.util.*;
+// Logic: take a node, traverse its neighbor, then its neighbor, so on until all are visited
 
 public class DFS {
 	// Driver Code

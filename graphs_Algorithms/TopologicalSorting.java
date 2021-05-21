@@ -4,11 +4,17 @@ package graphs_Algorithms;
 
 import java.util.LinkedList;
 import java.util.Stack;
+/*
+Toposort is only for Directed Acyclic Graph DAG.
+It is a linear order of vertices s.t. for every directed edge u->v , vetex U comes before vertex V.
 
-// Toposort is only for Directed Acyclic Graph DAG.
-// It is a linear order of vertices s.t. for every directed edge u->v , vetex U comes before vertex V. 
-// Time Complexity: O(V+E).
-
+Logic: Use dfs and Stack to get the sorting.
+Visit a node, then visit it's all neighbors
+before going to next node, push it in stack(backtracking)
+do this for all nodes
+ 
+Time Complexity: O(V+E).
+*/
 public class TopologicalSorting {
 	public static void main(String[] args) {
 		Graph11 graph = new Graph11(4);

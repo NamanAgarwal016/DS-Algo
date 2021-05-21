@@ -1,15 +1,21 @@
 package graphs_Algorithms;
 
+/*
+Dijkstra's Algorithm on : 
+Undirected/ Directed Weighted Graph
 
-// Dijkstra's Algorithm on : 
-// Undirected/ Directed Weighted Graph
+Logic: For each node, 
+1st find non-visited minDistNode, and mark it visited
+then traverse all it's neighbors and relax their edges
+finally nodeDist[] will have the shortest dist from source
 
-// Drawback : dosen't work properly For Negative weighted edge graphs
+Drawback : dosen't work properly For Negative weighted edge graphs
 
-// Time Complexity now : O[V*V]
-// Optimization : using Binary Heap Priority Queue implementation for findMinNodeIndex
-// Opti Time Comlexity : O((E+V)*LogV) = O(ELogV) 
-//Time complexity can be further reduced to O(E + VLogV) using Fibonacci Heap. The reason is, Fibonacci Heap takes O(1) time for decrease-key operation while Binary Heap takes O(Logn) time.
+Time Complexity now : O[V*V]
+Optimization : using Binary Heap Priority Queue implementation for findMinNodeIndex
+Opti Time Complexity : O((E+V)*LogV) = O(ELogV) 
+Time complexity can be further reduced to O(E + VLogV) using Fibonacci Heap. The reason is, Fibonacci Heap takes O(1) time for decrease-key operation while Binary Heap takes O(Logn) time.
+ */
 
 import java.util.LinkedList;
 
@@ -105,9 +111,9 @@ class Graph7 {
 		int parent[] = new int[v];
 		parent[source] = -1;
 
-		for (int node = 0; node < adj.length - 1; node++) { // last node ke liye uske neighbrs already calculate kar
-															// diye
-
+		for (int node = 0; node < adj.length - 1; node++) { 
+			// last node ke liye uske neighbrs already calculate kar diye
+			
 			// find vertex with min dist and also not visited
 			int minNodeIndex = findMinNodeIndex(nodeDist, visited);
 

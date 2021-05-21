@@ -11,6 +11,8 @@ import java.util.LinkedList;
 
 // https://www.youtube.com/watch?v=FtN3BYH2Zes&ab_channel=AbdulBari
 
+// Logic: Relax all edges v-1 times (v = no. of vertices) to get shortest dist
+
 // time complexity = O[V*E]
 // worst case when complete graph with n vertices : O[n^3]
 

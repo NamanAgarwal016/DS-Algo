@@ -4,6 +4,7 @@ package graphs_Algorithms;
 //BFS(int s) traverses vertices reachable from s.
 
 import java.util.*;
+// Logic: Use Queue & visited[] to print the bfs traversal
 
 public class BFS {
 	// Driver method to
