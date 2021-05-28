@@ -1,21 +1,20 @@
 package graphs_Algorithms;
-
-// Attention :  Here time complexity is going to V^3 bcoz of use of adjacency list. Instead if we simply use array of 
-// edges then complexity reduces to V^2. See this: https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
-
-// For Negative weighted edge graphs 
-
-//Drawback : not work for negative weight cycle, but can detect
-
 import java.util.LinkedList;
+/*
+https://www.youtube.com/watch?v=FtN3BYH2Zes&ab_channel=AbdulBari
 
-// https://www.youtube.com/watch?v=FtN3BYH2Zes&ab_channel=AbdulBari
+Logic: Relax all edges v-1 times (v = no. of vertices) to get shortest dist
 
-// Logic: Relax all edges v-1 times (v = no. of vertices) to get shortest dist
+Work for Negative weighted edge graphs
 
-// time complexity = O[V*E]
-// worst case when complete graph with n vertices : O[n^3]
+Drawback : not work for negative weight cycle, but can detect
 
+Attention :  Here time complexity is going to V^3 bcoz of use of adjacency list. Instead if we simply use array of 
+edges then complexity reduces to V^2. See this: https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
+
+time complexity = O[V*E]
+worst case when complete graph with n vertices : O[n^3]
+*/
 public class BellmanFordAlgorithm {
 	public static void main(String[] args) {
 

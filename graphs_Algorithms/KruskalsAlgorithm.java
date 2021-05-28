@@ -1,7 +1,8 @@
 package graphs_Algorithms;
 
-// https://www.youtube.com/watch?v=rbKcTM3RREw&feature=youtu.be&ab_channel=CodingNinjasIndia
-// https://www.youtube.com/watch?v=wU6udHRIkcc&ab_channel=AbdulBari
+// MST basics: https://www.youtube.com/watch?v=jMioOe2eTcY
+// Union & find: https://www.youtube.com/watch?v=wU6udHRIkcc&ab_channel=AbdulBari
+// Kruskal implementation: https://youtu.be/rbKcTM3RREw
 
 import java.util.*;
 
