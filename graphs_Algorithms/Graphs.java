@@ -6,13 +6,13 @@ import java.util.*;
 
 public class Graphs {
 	
-	private static LinkedList<Integer> adj[];	// array of linked lists
+	private static List<Integer> adj[];	// array of linked lists
 	
 	public Graphs(int v) {
-		adj = new LinkedList[v];			
+		adj = new List[v];			
 											// just for initialization
 		for (int i = 0; i < v; i++) {
-			adj[i] = new LinkedList<Integer>();
+			adj[i] = new ArrayList<Integer>();
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class Graphs {
 		return dfsUtil(source, destination, vis);
 	}
 	
-// using stack and backtracking
+// using stack and visited[]
 	public boolean dfsStack(int source, int destination) {
 		boolean vis[] = new boolean[adj.length];
 		vis[source] = true;
@@ -138,7 +138,5 @@ public class Graphs {
 		
 		System.out.println("possible " + graph.dfs(source, destination));
 		System.out.println("possible " + graph.dfsStack(source, destination));
-		
-		
 	}
 }
