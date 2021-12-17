@@ -53,33 +53,30 @@ class Graph1 {
 
 		// Call the recursive helper function to detect cycle in different DFS trees
 		// This for-loop also takes care of the unconnected graph case.
-		for (int i = 0; i < V; i++)
-			if (isCyclicUtil(i, visited, recStack))
-				return true;
+		for (int node = 0; node < V; node++)
+			if(!visited[node])
+				if (isCyclicUtil(node, visited, recStack))
+					return true;
 
 		return false;
 	}
 
 	// This function is a variation of DFSUtil()
-	private boolean isCyclicUtil(int i, boolean[] visited, boolean[] recStack) {
+	private boolean isCyclicUtil(int node, boolean[] visited, boolean[] recStack) {
 
-		// Mark the current node as visited and part of recursion stack
-		if (recStack[i])
-			return true;
+		visited[node] = true;
+		recStack[node] = true;
 
-		if (visited[i])
-			return false;
-
-		visited[i] = true;
-		recStack[i] = true;
-
-		List<Integer> children = adj.get(i);
-
-		for (Integer c : children)
-			if (isCyclicUtil(c, visited, recStack))
+		for (int neigh : adj.get(node)) {
+			if(!visited[neigh]) {
+				if (isCyclicUtil(neigh, visited, recStack))
+					return true;
+			}
+			else if(recStack[neigh])
 				return true;
+		}
 
-		recStack[i] = false;
+		recStack[node] = false;
 
 		return false;
 	}
