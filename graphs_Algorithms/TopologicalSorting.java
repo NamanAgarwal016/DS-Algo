@@ -19,7 +19,7 @@ Time Complexity: O(V+E).
 Topological sort BFS = Kahn's Algorithm = Least In-degree Node Approach :
 	Step1 : find in-degree for all vertices
     Step2 : Push all nodes with indegree = 0 in q
-    Step3 : apply bfs & process (remove nodes and decrease indgree og neighbors)
+    Step3 : apply bfs & process (remove nodes and decrease indgree of neighbors)
     Step4 : push indegree = 0 nodes & maintain a count of processed nodes
 
     finally if count != no. of nodes then graph is not DAG, has cycle, no toposort

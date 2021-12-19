@@ -1,27 +1,67 @@
 package graphs_Algorithms;
 
+import java.util.*;
+
 /*
 Dijkstra's Algorithm on : 
 Undirected/ Directed Weighted Graph
 
+To find shortest path b/w src & every other node
+
+
+#Without using Heaps
 Logic: For each node, 
 1st find non-visited minDistNode, and mark it visited
 then traverse all it's neighbors and relax their edges
+Relaxing means: nodeDist[nextNode] > nodeDist[minNodeIndex] + dist
 finally nodeDist[] will have the shortest dist from source
 
 Drawback : dosen't work properly For Negative weighted edge graphs
 
 Time Complexity now : O[V*V]
+
 Optimization : using Binary Heap Priority Queue implementation for findMinNodeIndex
 Opti Time Complexity : O((E+V)*LogV) = O(ELogV) 
 Time complexity can be further reduced to O(E + VLogV) using Fibonacci Heap. The reason is, Fibonacci Heap takes O(1) time for decrease-key operation while Binary Heap takes O(Logn) time.
+
+#With using Heaps
+Logic:
+Here adj[] array of List of class Edge(node, dist)
+
+Make nodeDist[], initialize all to inf, make nodeDist[src] = 0;
+Make PQ<Edge> pq with Custom Comparator
+We will store node and its best min dist from src in PQ.
+insert src in pq with dist = 0.  pq.add(new Edge(src, 0))
+
+Now similar to bfs, run while loop till pq is empty
+remove node. That will automatically have minDist from src (as they are stored in min Heap)
+traverse all its neighs
+If possible to relax the neigh, then only add that neigh to pq, after relaxing it.
+Relax means: nodeDist[neigh] > nodeDist[curr] + dist
+
+Finally, all min dist will be stored in nodeDist[]
+
  */
 
-import java.util.LinkedList;
 
 public class DijkstraAlgorithm {
 
 	public static void main(String[] args) {
+		
+		// Using Min Heap: Only this code is sufficient
+//https://youtu.be/jbhuqIASjoM
+		
+		Graph7a graph3 = new Graph7a(5);
+		graph3.addEdge(0, 1, 4);
+		graph3.addEdge(0, 2, 8);
+		graph3.addEdge(1, 2, 2);
+		graph3.addEdge(1, 3, 5);
+		graph3.addEdge(2, 3, 5);
+		graph3.addEdge(2, 4, 9);
+		graph3.addEdge(3, 4, 4);
+
+		graph3.dijkstra(3);
+
 
 		// Undirected Graph
 // https://www.youtube.com/watch?v=bImvsFNym9I&ab_channel=CodingNinjasIndia
@@ -39,7 +79,7 @@ public class DijkstraAlgorithm {
 		graph1.dijkstra(3);
 
 		// Directed Graph
-// https://www.youtube.com/watch?v=XB4MIexjvY0&ab_channel=AbdulBari
+		// https://www.youtube.com/watch?v=XB4MIexjvY0&ab_channel=AbdulBari
 		Graph7 graph2 = new Graph7(7);
 		graph2.addEdge(1, 2, 2);
 		graph2.addEdge(1, 3, 4);
@@ -55,6 +95,75 @@ public class DijkstraAlgorithm {
 		graph2.dijkstra(1);
 	}
 }
+
+// Using Min Heap
+class Graph7a{
+	private int v;
+
+	private class Edge implements Comparator<Edge>{
+		int dest, dist;
+
+		public Edge(int dest, int dist) {
+			this.dest = dest;
+			this.dist = dist;
+		}
+
+		// Now for using custom comparator in PQ
+		public Edge() {
+		}
+		public int compare(Edge o1, Edge o2) {
+			return o1.dist - o2.dist;
+		}
+	}
+
+
+	private List<Edge> adj[];
+
+	public Graph7a(int v){
+		this.v = v;
+		adj = new List[v];
+		for (int i = 0; i < adj.length; i++) {
+			adj[i] = new LinkedList<Edge>();
+		}
+	}
+
+	void addEdge(int source, int dest, int dist) {
+		adj[source].add(new Edge(dest, dist));
+		adj[dest].add(new Edge(source, dist));
+	}
+
+	void dijkstra(int src) {
+
+		int nodeDist[] = new int[v];
+		for(int i = 0; i < v; i++)
+			nodeDist[i] = Integer.MAX_VALUE;
+		nodeDist[src] = 0;
+
+		PriorityQueue<Edge> pq = new PriorityQueue<Edge>(new Edge());
+		pq.add(new Edge(src, 0));
+
+		while(!pq.isEmpty()) {
+			int curr = pq.peek().dest;  //curr node from PQ will give minDistNode
+			pq.poll();
+
+			for(Edge edge: adj[curr]) {
+				int neigh = edge.dest;
+				int dist = edge.dist;		//dist b/w curr & neigh
+
+				if(nodeDist[neigh] > nodeDist[curr] + dist) {
+					nodeDist[neigh] = nodeDist[curr] + dist;
+					pq.add(new Edge(neigh, nodeDist[neigh]));
+				}
+			}
+		}
+
+		System.out.println("\nDistance of nodes from source :");
+		for (int node = 0; node < nodeDist.length; node++) {
+			System.out.println(node + " : " + nodeDist[node]);
+		}
+	}
+}
+
 
 class Graph7 {
 	private int v;
@@ -113,7 +222,7 @@ class Graph7 {
 
 		for (int node = 0; node < adj.length - 1; node++) { 
 			// last node ke liye uske neighbrs already calculate kar diye
-			
+
 			// find vertex with min dist and also not visited
 			int minNodeIndex = findMinNodeIndex(nodeDist, visited);
 
@@ -123,7 +232,7 @@ class Graph7 {
 				int dist = adj[minNodeIndex].get(i).weight;
 
 				if (nodeDist[nextNode] > nodeDist[minNodeIndex] + dist && nodeDist[minNodeIndex] != Integer.MAX_VALUE) {
-// 2nd condition bcoz: MAX_VALUE + any +ve = becomes negative and then this will be true : MAX_VALUE > MAX_VALUE + weight
+					// 2nd condition bcoz: MAX_VALUE + any +ve = becomes negative and then this will be true : MAX_VALUE > MAX_VALUE + weight
 					nodeDist[nextNode] = nodeDist[minNodeIndex] + dist;
 					parent[nextNode] = minNodeIndex;
 				}
@@ -143,22 +252,10 @@ class Graph7 {
 	}
 
 	private int findMinNodeIndex(int nodeDist[], boolean visited[]) {
-//		int minNodeIndex = 0;
-//		for (int i = 0; i < visited.length; i++) {
-//			if (!visited[i]) {
-//				minNodeIndex = i;
-//				break;
-//			}
-//		}
-//		for (int i = 0; i < nodeDist.length; i++) {
-//			if (nodeDist[i] < nodeDist[minNodeIndex] && !visited[i])
-//				minNodeIndex = i;
-//		}
-
-		// Instead of above 2 for loop :
-		int minVertex = -1;
+		int minVertex = -1;			//to catch 1st non-visited, won't be possible with minVertex=0
 		for (int i = 0; i < nodeDist.length; i++) {
-			if (!visited[i] && (minVertex == -1 || nodeDist[i] < nodeDist[minVertex])) {		// Here order in OR condition is IMP, otherwise it will be indexOutOfBound = -1
+			// Here order in OR condition is IMP, otherwise it will be indexOutOfBound = -1
+			if (!visited[i] && (minVertex == -1 || nodeDist[i] < nodeDist[minVertex])) {		
 				minVertex = i;
 			}
 		}
@@ -166,92 +263,4 @@ class Graph7 {
 		visited[minVertex] = true;
 		return minVertex;
 	}
-
 }
-
-// Binary Heap Map implementation :
-
-// https://github.com/mission-peace/interview/blob/master/src/com/interview/graph/DijkstraShortestPath.A
-
-//class DijkstraShortestPath {
-//
-//    public Map<Vertex<Integer>,Integer> shortestPath(Graph<Integer> graph, Vertex<Integer> sourceVertex){
-//
-//        //heap + map data structure
-//        BinaryMinHeap<Vertex<Integer>> minHeap = new BinaryMinHeap<>();
-//
-//        //stores shortest distance from root to every vertex
-//        Map<Vertex<Integer>,Integer> distance = new HashMap<>();
-//
-//        //stores parent of every vertex in shortest distance
-//        Map<Vertex<Integer>, Vertex<Integer>> parent = new HashMap<>();
-//
-//        //initialize all vertex with infinite distance from source vertex
-//        for(Vertex<Integer> vertex : graph.getAllVertex()){
-//            minHeap.add(Integer.MAX_VALUE, vertex);
-//        }
-//
-//        //set distance of source vertex to 0
-//        minHeap.decrease(sourceVertex, 0);
-//
-//        //put it in map
-//        distance.put(sourceVertex, 0);
-//
-//        //source vertex parent is null
-//        parent.put(sourceVertex, null);
-//
-//        //iterate till heap is not empty
-//        while(!minHeap.empty()){
-//            //get the min value from heap node which has vertex and distance of that vertex from source vertex.
-//            BinaryMinHeap<Vertex<Integer>>.Node heapNode = minHeap.extractMinNode();
-//            Vertex<Integer> current = heapNode.key;
-//
-//            //update shortest distance of current vertex from source vertex
-//            distance.put(current, heapNode.weight);
-//
-//            //iterate through all edges of current vertex
-//            for(Edge<Integer> edge : current.getEdges()){
-//
-//                //get the adjacent vertex
-//                Vertex<Integer> adjacent = getVertexForEdge(current, edge);
-//
-//                //if heap does not contain adjacent vertex means adjacent vertex already has shortest distance from source vertex
-//                if(!minHeap.containsData(adjacent)){
-//                    continue;
-//                }
-//
-//                //add distance of current vertex to edge weight to get distance of adjacent vertex from source vertex
-//                //when it goes through current vertex
-//                int newDistance = distance.get(current) + edge.getWeight();
-//
-//                //see if this above calculated distance is less than current distance stored for adjacent vertex from source vertex
-//                if(minHeap.getWeight(adjacent) > newDistance) {
-//                    minHeap.decrease(adjacent, newDistance);
-//                    parent.put(adjacent, current);
-//                }
-//            }
-//        }
-//        return distance;
-//    }
-//
-//    private Vertex<Integer> getVertexForEdge(Vertex<Integer> v, Edge<Integer> e){
-//        return e.getVertex1().equals(v) ? e.getVertex2() : e.getVertex1();
-//    }
-//    
-//    public static void main(String args[]){
-//        Graph<Integer> graph = new Graph<>(false);
-//
-//        graph.addEdge(1, 2, 5);
-//        graph.addEdge(2, 3, 2);
-//        graph.addEdge(1, 4, 9);
-//        graph.addEdge(1, 5, 3);
-//        graph.addEdge(5, 6, 2);
-//        graph.addEdge(6, 4, 2);
-//        graph.addEdge(3, 4, 3);
-//
-//        DijkstraShortestPath dsp = new DijkstraShortestPath();
-//        Vertex<Integer> sourceVertex = graph.getVertex(1);
-//        Map<Vertex<Integer>,Integer> distance = dsp.shortestPath(graph, sourceVertex);
-//        System.out.print(distance);
-//    }
-//}

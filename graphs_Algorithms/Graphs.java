@@ -61,11 +61,11 @@ public class Graphs {
 	
 	// dfs recursive approach to find path exist or not
 	private boolean dfsUtil(int source, int destination, boolean vis[]) {
+		vis[source] = true;
 		if(source == destination) 	return true;
 		
 		for(int neighbour: adj[source]) {
 			if(! vis[neighbour]) {
-				vis[neighbour] = true;
 				boolean isConnected = dfsUtil(neighbour, destination, vis);
 				if(isConnected) return true;
 			}
@@ -133,9 +133,9 @@ public class Graphs {
 		System.out.println("Enter source and destination: ");
 		int source = sc.nextInt();
 		int destination = sc.nextInt();
-		int shortestDistance = graph.bfs(source, destination);
-		System.out.println("\nShortest distance is:  " + shortestDistance);
-		
+//		int shortestDistance = graph.bfs(source, destination);
+//		System.out.println("\nShortest distance is:  " + shortestDistance);
+//		
 		System.out.println("possible " + graph.dfs(source, destination));
 		System.out.println("possible " + graph.dfsStack(source, destination));
 	}

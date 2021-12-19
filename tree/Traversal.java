@@ -11,6 +11,8 @@ public class Traversal {
 		root.right = new Node(3);
 		root.left.left = new Node(4);
 		root.left.right = new Node(5);
+		root.right.left = new Node(6);
+		root.right.right = new Node(7);
 
 		System.out.println("\nHeight of tree is : " + height(root));
 
@@ -21,7 +23,7 @@ public class Traversal {
 		System.out.print("\nPostorder Traversal : ");
 		postorder(root);
 		System.out.print("\nLevelorder Traversal : ");
-		levelorder2(root);
+		levelorder3(root);
 	}
 
 	// calculate height of tree
@@ -61,7 +63,7 @@ public class Traversal {
 		Queue<Node> queue = new LinkedList<Node>();
 		queue.add(root);
 		while (!queue.isEmpty()) {
-			Node tempNode = queue.remove();
+			Node tempNode = queue.poll();
 			System.out.print(tempNode.key + " ");
 
 			/* Enqueue left child */
@@ -78,21 +80,20 @@ public class Traversal {
 	
 	// Same mtd, but executing level wise 
 	static void levelorder3(Node root) {
-//		queue<TreeNode*> remNodes;
-//        remNodes.push(root);
-//        while(remNodes.empty()==false){
-//            int cls = remNodes.size(); //curr_level_size
-//            double sum=0;
-//            for(int i=0;i<cls;i++){
-//                TreeNode* temp = remNodes.front();
-//                remNodes.pop();
-//                sum+=(double)temp->val;
-//                if(temp->left) remNodes.push(temp->left);
-//                if(temp->right) remNodes.push(temp->right);
-//            }
-//            ans.push_back(sum/cls);
-//        }
-//        return ans;
+		Queue<Node> q = new LinkedList<Node>();
+		q.add(root);
+		while (!q.isEmpty()) {
+            int cls = q.size(); //curr_level_size
+            
+            for(int i=0; i < cls; i++){
+                Node curr = q.poll();
+                System.out.print(curr.key + " ");
+                
+                if(curr.left != null) q.add(curr.left);
+                if(curr.right != null) q.add(curr.right);
+            }
+            //System.out.println();
+        }
 	}
 	
 	// DFS : Depth first traversal
