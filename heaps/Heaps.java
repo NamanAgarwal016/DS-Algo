@@ -65,11 +65,11 @@ public class Heaps {
 	static void heapify(int heap[]) {
 		int n = heap.length;
 		for(int i = n/2 -1; i >= 0; i--) {
-			adjustingNode(heap, i, n);  //adjusting ith node in heap size of n;
+			adjustingNodeDownwards(heap, i, n);  //adjusting ith node in heap size of n;
 		}
 	}
 	
-	static void adjustingNode(int heap[], int i, int n) {
+	static void adjustingNodeDownwards(int heap[], int i, int n) {
 		int node = heap[i];
 		int left = heap[2*i + 1];
 		int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
@@ -98,7 +98,7 @@ public class Heaps {
 		int n = last;		//len of heap[] is reduced now
 
 		//Now adjust the disturbed heap[]:
-		adjustingNode(heap, i, n);
+		adjustingNodeDownwards(heap, i, n);
 
 		//Now just returning the deleted element
 		return heap[last];
