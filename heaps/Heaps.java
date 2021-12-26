@@ -7,117 +7,151 @@ package heaps;
  * Min Heap: parent < both child
  * there can be repeating elements, no order in child
  * 
- * Node = i, parent = i/2, left_child = 2*i, right_child = 2*i + 1	(due to complete BT)
- * leaf nodes: [n/2 + 1 to n]
+ * Node = i, parent = (i-1)/2, left_child = 2*i+1, right_child = 2*i + 2	(due to complete BT)
+ * leaf nodes: [n/2 to n-1]
  * 
  * Insert operation (O[logn]): always first inserted as leftmost-bottomost leaf or as a last element in array.
  * then move it up by comparing parent.
+ *  direction is upwards.
  * 
  * Delete operation (O[logn]): always done on root node.
  * first delete root value, (first element of array)
  * replace it with last leaf, (last element of array)
  * now satisfy heap property: replace parent if it is smaller than largest child.
+ * direction is downwards.
  * 
  * Heapify Algo (O[n]): to construct a new heap
+ * opposite direc to insertion
  * using again & again insert operation takes nlogn, but heapify takes O[n]
  * algo is used to convert given array into heap array.
  * using propert that each subtree is itself maxHeap internally.
  * will start from last n/2 index, bcoz leaf nodes are itself maxHeaps.
+ * direction is downwards.
  */
 
 public class Heaps {
 	public static void main(String[] args) {
-		//Max Heap
+		int arr[] = {10, 2, 30, 50, 20, 35, 15};
+		heapSort(arr);
 		
-		int heap[] = new int[1000];
-		heap[0] = -1; // this is must for parent = i/2 to correctly work.
-		
-		//initial data
-		heap[1] = 50; heap[2] = 30; heap[3] = 40; heap[4] = 10;
-		heap[5] = 5; heap[6] = 20; heap[7] = 30;
- 		
-		print(heap);				//-1 50 30 40 10 5 20 30 
-		
-		insert(60, 7, heap);		//-1 60 50 40 30 5 20 30 10 
-		insert(45, 8, heap);		//-1 60 50 40 45 5 20 30 10 30 
-		
-		delete(9, heap);			//-1 50 45 40 30 5 20 30 10
-		delete(8, heap);			//-1 45 30 40 10 5 20 30 
-		
-		int arr[] = {-1, 10, 30, 50, 20, 35, 15};
-		heapify(arr.length-1, arr);
+		//insert 40 in the given max-heap[], in place of -1(always in last)
+		int heap[] = {50, 20, 35, 2, 10, 30, 15, -1};
+		insertion(heap, 40);
 	}
-	
-	static void insert(int val, int n, int heap[]) {
-		n++;
-		heap[n] = val;
-		int curr = n, parent = curr/2;	//index
+
+	//HeapSort: creating heap using heapify, then deletion of elements
+	//sorting in ascending order
+	// No extra space: in-place sorting algo
+	// Not a stable algo, duplicates will not maintain same relative position
+	// will work for all int[]: duplicates, -ve, +ve, 0
+	static void heapSort(int arr[]) {
+		int n = arr.length;
+
+		int heap[] = arr;
+		print(heap);
+
+		//creating a MaxHeap using heapify mtd
+		heapify(heap);
+		print(heap); 
 		
-		while(curr > 1 && heap[parent] < heap[curr]) {
-			//swap;
-			int temp = heap[parent];
-			heap[parent] = heap[curr];
-			heap[curr] = temp;
-			
-			curr = parent;
-			parent = curr/2;
-		}
-		
+		//Now deletion & storing
+		for(int i = n-1; i >= 2; i--)
+			heap[i] = deletion(heap, i);
+		swap(heap, 0, 1);	//for the starting 2 elements, just a swap needed
+
 		print(heap);
 	}
-	
-	static void delete(int n, int heap[]) {
-		heap[1] = heap[n];
-		heap[n] = 0;
-		n--;
-		
-		int curr = 1;
-		
-		while(curr < n) {
-			int larger = heap[2*curr] > heap[2*curr+1] ? 2*curr : 2*curr+1;
-			
-			if(heap[curr] > heap[larger])
+
+	static void heapify(int heap[]) {
+		int n = heap.length;
+		for(int i = n/2 -1; i >= 0; i--) {
+			int node = heap[i];
+			int left = heap[2*i + 1];
+			int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
+
+			int j = i;		//stores new index of the node after adjustments
+			while(node < Math.max(left, right)) {
+				if(left >= right) {
+					swap(heap, j, 2*j+1);
+					j = 2*j+1;
+				}
+				else if(right > left) {
+					swap(heap, j, 2*j+2);
+					j = 2*j+2;
+				}
+				if(j > n/2 -1)
+					break;
+				node = heap[j];
+				left = heap[2*j + 1];
+				right = 2*j+2 <= n-1 ? heap[2*j + 2] : -1;
+			}
+		}
+	}
+
+	static int deletion(int heap[], int last) {
+		swap(heap, 0, last);
+		int i = 0;
+		int n = last;		//len of heap[] is reduced now
+
+		//Again Heapify the disturbed heap[]:
+
+		//exactly same, without any single line change in "heapify for-loop" code.
+		int node = heap[i];
+		int left = heap[2*i + 1];
+		int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
+
+		int j = i;		//stores new index of the node after adjustments
+		while(node < Math.max(left, right)) {
+			if(left >= right) {
+				swap(heap, j, 2*j+1);
+				j = 2*j+1;
+			}
+			else if(right > left) {
+				swap(heap, j, 2*j+2);
+				j = 2*j+2;
+			}
+			if(j > n/2 -1)
 				break;
-			else {
-				//swap
-				int temp = heap[larger];
-				heap[larger] = heap[curr];
-				heap[curr] = temp;
-				
-				curr = larger;
-			}
+			node = heap[j];
+			left = heap[2*j + 1];
+			right = 2*j+2 <= n-1 ? heap[2*j + 2] : -1;
 		}
-		
-		print(heap);
+
+		//Now just returning the deleted element
+		return heap[last];
 	}
-	
-	static void heapify(int n, int arr[]) {
-		int curr = n/2;
-		
-		while(curr >= 1) {
-			int larger;
-			if(2*curr+1 > n)
-				larger = 2*curr;
-			else
-				larger = arr[2*curr] > arr[2*curr+1] ? 2*curr : 2*curr+1;
-			 
-			if(arr[curr] < arr[larger]) {
-				//swap
-				int temp = arr[larger];
-				arr[larger] = arr[curr];
-				arr[curr] = temp;
-			}
-			curr--;
-		}
-		
-		print(arr);
+
+	static void swap(int arr[], int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
-	
+
 	static void print(int heap[]) {
 		for(int e: heap) {
-			if(e == 0) break;
-			else System.out.print(e + " ");
+			System.out.print(e + " ");
 		}
 		System.out.println();
+	}
+
+	//here length will increase, as ele is inserted
+	// before passing, inc heap[] size by 1, put -1 at the last
+	static void insertion(int heap[], int val) {
+		int n = heap.length;
+		heap[n-1] = val;
+
+		int i = n-1;
+		int node = heap[i];
+		int parent = heap[(i-1)/2];
+		
+		while(node > parent) {
+			swap(heap, i, (i-1)/2);
+			i = (i-1)/2;
+			node = heap[i];
+			parent = heap[(i-1)/2];
+		}
+		
+		//print the final heap[]
+		print(heap);
 	}
 }

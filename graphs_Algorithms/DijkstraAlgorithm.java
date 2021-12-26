@@ -139,7 +139,7 @@ class Graph7a{
 			nodeDist[i] = Integer.MAX_VALUE;
 		nodeDist[src] = 0;
 
-		PriorityQueue<Edge> pq = new PriorityQueue<Edge>(new Edge());
+		PriorityQueue<Edge> pq = new PriorityQueue<>(new Edge());
 		pq.add(new Edge(src, 0));
 
 		while(!pq.isEmpty()) {

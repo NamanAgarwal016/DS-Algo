@@ -126,14 +126,10 @@ class Graph14 {
 		return max;
 	}
 
-	public boolean canUseColor(int color, int vertex) {
-		for (int j = 0; j < adj[vertex].size(); j++) {
-			int neighbor = adj[vertex].get(j);
-			int colorOfNeighbor = coloredVertex[neighbor];
-
-			if (color == colorOfNeighbor)
+	public boolean canUseColor(int color, int node) {
+		for(int neigh: adj[node])
+			if(color == coloredVertex[neigh])
 				return false;
-		}
 		return true;
 	}
 
