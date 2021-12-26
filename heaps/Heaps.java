@@ -65,37 +65,11 @@ public class Heaps {
 	static void heapify(int heap[]) {
 		int n = heap.length;
 		for(int i = n/2 -1; i >= 0; i--) {
-			int node = heap[i];
-			int left = heap[2*i + 1];
-			int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
-
-			int j = i;		//stores new index of the node after adjustments
-			while(node < Math.max(left, right)) {
-				if(left >= right) {
-					swap(heap, j, 2*j+1);
-					j = 2*j+1;
-				}
-				else if(right > left) {
-					swap(heap, j, 2*j+2);
-					j = 2*j+2;
-				}
-				if(j > n/2 -1)
-					break;
-				node = heap[j];
-				left = heap[2*j + 1];
-				right = 2*j+2 <= n-1 ? heap[2*j + 2] : -1;
-			}
+			adjustingNode(heap, i, n);  //adjusting ith node in heap size of n;
 		}
 	}
-
-	static int deletion(int heap[], int last) {
-		swap(heap, 0, last);
-		int i = 0;
-		int n = last;		//len of heap[] is reduced now
-
-		//Again Heapify the disturbed heap[]:
-
-		//exactly same, without any single line change in "heapify for-loop" code.
+	
+	static void adjustingNode(int heap[], int i, int n) {
 		int node = heap[i];
 		int left = heap[2*i + 1];
 		int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
@@ -116,6 +90,15 @@ public class Heaps {
 			left = heap[2*j + 1];
 			right = 2*j+2 <= n-1 ? heap[2*j + 2] : -1;
 		}
+	}
+
+	static int deletion(int heap[], int last) {
+		swap(heap, 0, last);
+		int i = 0;
+		int n = last;		//len of heap[] is reduced now
+
+		//Now adjust the disturbed heap[]:
+		adjustingNode(heap, i, n);
 
 		//Now just returning the deleted element
 		return heap[last];
