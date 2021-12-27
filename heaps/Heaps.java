@@ -33,7 +33,7 @@ public class Heaps {
 	public static void main(String[] args) {
 		int arr[] = {10, 2, 30, 50, 20, 35, 15};
 		heapSort(arr);
-		
+
 		//insert 40 in the given max-heap[], in place of -1(always in last)
 		int heap[] = {50, 20, 35, 2, 10, 30, 15, -1};
 		insertion(heap, 40);
@@ -53,7 +53,7 @@ public class Heaps {
 		//creating a MaxHeap using heapify mtd
 		heapify(heap);
 		print(heap); 
-		
+
 		//Now deletion & storing
 		for(int i = n-1; i >= 2; i--)
 			heap[i] = deletion(heap, i);
@@ -65,30 +65,7 @@ public class Heaps {
 	static void heapify(int heap[]) {
 		int n = heap.length;
 		for(int i = n/2 -1; i >= 0; i--) {
-			adjustingNodeDownwards(heap, i, n);  //adjusting ith node in heap size of n;
-		}
-	}
-	
-	static void adjustingNodeDownwards(int heap[], int i, int n) {
-		int node = heap[i];
-		int left = heap[2*i + 1];
-		int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
-
-		int j = i;		//stores new index of the node after adjustments
-		while(node < Math.max(left, right)) {
-			if(left >= right) {
-				swap(heap, j, 2*j+1);
-				j = 2*j+1;
-			}
-			else if(right > left) {
-				swap(heap, j, 2*j+2);
-				j = 2*j+2;
-			}
-			if(j > n/2 -1)
-				break;
-			node = heap[j];
-			left = heap[2*j + 1];
-			right = 2*j+2 <= n-1 ? heap[2*j + 2] : -1;
+			adjustNodeDownwards(heap, i, n);  //adjusting ith node in heap size of n;
 		}
 	}
 
@@ -98,10 +75,53 @@ public class Heaps {
 		int n = last;		//len of heap[] is reduced now
 
 		//Now adjust the disturbed heap[]:
-		adjustingNodeDownwards(heap, i, n);
+		adjustNodeDownwards(heap, i, n);
 
 		//Now just returning the deleted element
 		return heap[last];
+	}
+
+	static void adjustNodeDownwards(int heap[], int i, int n) {
+		int node = heap[i];
+		int left = heap[2*i + 1];
+		int right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;		//bcoz right may exist may not
+
+		while(node < Math.max(left, right)) {
+			if(left >= right) {
+				swap(heap, i, 2*i+1);
+				i = 2*i+1;
+			}
+			else if(right > left) {
+				swap(heap, i, 2*i+2);
+				i = 2*i+2;
+			}
+			if(i > n/2 -1)
+				break;
+			node = heap[i];
+			left = heap[2*i + 1];
+			right = 2*i+2 <= n-1 ? heap[2*i + 2] : -1;
+		}
+	}
+	
+	//here length will increase, as ele is inserted
+	// before passing, inc heap[] size by 1, put -1 at the last
+	static void insertion(int heap[], int val) {
+		int n = heap.length;
+		heap[n-1] = val;
+
+		int i = n-1;
+		int node = heap[i];
+		int parent = heap[(i-1)/2];
+
+		while(node > parent) {
+			swap(heap, i, (i-1)/2);
+			i = (i-1)/2;
+			node = heap[i];
+			parent = heap[(i-1)/2];
+		}
+
+		//print the final heap[]
+		print(heap);
 	}
 
 	static void swap(int arr[], int i, int j) {
@@ -115,26 +135,5 @@ public class Heaps {
 			System.out.print(e + " ");
 		}
 		System.out.println();
-	}
-
-	//here length will increase, as ele is inserted
-	// before passing, inc heap[] size by 1, put -1 at the last
-	static void insertion(int heap[], int val) {
-		int n = heap.length;
-		heap[n-1] = val;
-
-		int i = n-1;
-		int node = heap[i];
-		int parent = heap[(i-1)/2];
-		
-		while(node > parent) {
-			swap(heap, i, (i-1)/2);
-			i = (i-1)/2;
-			node = heap[i];
-			parent = heap[(i-1)/2];
-		}
-		
-		//print the final heap[]
-		print(heap);
 	}
 }
